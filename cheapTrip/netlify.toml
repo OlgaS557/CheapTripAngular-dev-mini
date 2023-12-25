@@ -1,0 +1,5 @@
+[build]
+  command = "npm run build"
+  publish = "dist/"
+  node_version = "14.x"
+  npm_version = "6.x"
