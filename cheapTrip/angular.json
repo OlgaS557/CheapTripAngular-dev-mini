@@ -5,11 +5,8 @@
   "projects": {
     "cheapTrip": {
       "i18n": { 
-        "sourceLocale": "en-US", 
-        "locales": { 
-          "ru": "src/i18n/messages.ru.xlf",
-          "ua": "src/i18n/messages.ua.xlf"
-        } 
+        "sourceLocale": "en-US" 
+        
       },
       "projectType": "application",
       "schematics": {
