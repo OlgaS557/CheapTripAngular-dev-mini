@@ -1,0 +1,34 @@
+div.main {
+  h1 {
+    text-align: center;
+  }
+  div {
+    button {
+      width: 6rem;
+      color: white;
+    }
+    button.Back{
+      background-color: var(--color-primary);
+    }
+    button.Close{
+      background-color: var(--color-accent);
+    }
+    button.Download{
+      background-color: var(--color-success);
+    }
+
+  }
+}
+.error {
+  h1 {
+    color: var(--color-primary);
+  }
+
+}
+
+.warning {
+  h1 {
+    color: var(--color-accent);
+  }
+
+}

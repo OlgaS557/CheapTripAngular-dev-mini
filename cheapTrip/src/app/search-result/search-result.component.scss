@@ -1,0 +1,138 @@
+@import "../../cheapTripStyles/styles.scss";
+
+div.mainContainer {
+  display: flex;
+  flex-direction: row;
+  width: 98%;
+  margin: auto;
+  position: relative;
+  justify-content: center;
+  align-items: flex-start;
+
+  mat-spinner {
+    margin: auto;
+  }
+
+  div.aside {
+    // flex-basis: 49%;
+    flex-grow: 0.67;
+  }
+  // div.map {
+  //   flex-basis: 50%;
+  //   display: flex;
+  //   justify-content: space-around;
+  //   border-left: 1px solid var(--color-accent);
+  // }
+}
+@include Large {
+  // div.map {
+  //  // border-left: 1px solid var(--color-accent);
+  // }
+}
+
+@include Medium {
+  div.mainContainer {
+    top: 2rem;
+    width: 95%;
+    height: auto;
+    margin: auto;
+    div.map {
+      //  align-self: stretch;
+      height: auto;
+  //   border-left: 1px solid var(--color-accent);
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}
+
+@include Small {
+  div.mainContainer {
+    top: 2rem;
+    flex-direction: column;
+    width: 95%;
+    height: auto;
+    margin: auto;
+    justify-content: flex-start;
+    align-items: baseline;
+    margin: auto;
+    div.aside {
+      align-self: stretch;
+    }
+    div.map {
+      align-self: stretch;
+      height: auto;
+    border: none;
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}
+
+@include XSmall {
+  div.mainContainer {
+    top: 2rem;
+    flex-direction: column;
+    width: 98%;
+    height: auto;
+    margin: auto;
+    justify-content: flex-start;
+    align-items: baseline;
+
+    div.aside {
+      align-self: stretch;
+    }
+    div.map {
+      align-self: stretch;
+      height: auto;
+      border: none;
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}
+@include Phones {
+  div.mainContainer {
+    top: 2rem;
+    flex-direction: column;
+    width: 98%;
+    height: auto;
+    margin: auto;
+    justify-content: flex-start;
+    align-items: baseline;
+
+    div.aside {
+      align-self: stretch;
+    }
+    div.map {
+      align-self: stretch;
+      height: auto;
+      border: none;
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}
+
+@include Smallphones {
+  div.mainContainer {
+    top: 0.5rem;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    margin: auto;
+    justify-content: flex-start;
+    align-items: baseline;
+    div.aside {
+      align-self: stretch;
+    }
+    div.map {
+      align-self: stretch;
+      height: auto;
+      border: none;
+      display: flex;
+      justify-content: space-around;
+
+    }
+  }
+}

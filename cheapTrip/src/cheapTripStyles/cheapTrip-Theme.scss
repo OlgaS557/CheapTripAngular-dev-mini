@@ -1,0 +1,97 @@
+@import "~@angular/material/theming";
+
+@include mat-core();
+
+$md-mainpalette: (
+    50 : #ffebe4,
+    100 : #ffcdbd,
+    200 : #ffab91,
+    300 : #ff8964,
+    400 : #ff7043,
+    500 : #ff5722,
+    600 : #ff4f1e,
+    700 : #ff4619,
+    800 : #ff3c14,
+    900 : #ff2c0c,
+    A100 : #ffffff,
+    A200 : #fff7f6,
+    A400 : #ffc9c3,
+    A700 : #ffb2a9,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-accentalette: (
+    50 : #eceff1,
+    100 : #cfd8dc,
+    200 : #b0bec5,
+    300 : #90a4ae,
+    400 : #78919c,
+    500 : #607d8b,
+    600 : #587583,
+    700 : #4e6a78,
+    800 : #44606e,
+    900 : #334d5b,
+    A100 : #abe1ff,
+    A200 : #78ceff,
+    A400 : #45bcff,
+    A700 : #2bb3ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+$dark-text: #4414b3;
+$dark-primary-text: rgba($dark-text, 0.87);
+$dark-accent-text: rgba($dark-primary-text, 0.54);
+$dark-disabled-text: rgba($dark-primary-text, 0.38);
+$dark-dividers: rgba($dark-primary-text, 0.12);
+$dark-focused: rgba($dark-primary-text, 0.12);
+
+
+$ct-primary: mat-palette($md-mainpalette,500, 400,300);
+$ct-accent: mat-palette($md-accentalette,500,400,300) ;
+$ct-warn: mat-palette($mat-red);
+$ct-success: mat-palette($mat-light-blue);
+
+$ct-theme: mat-light-theme($ct-primary, $ct-accent, $ct-warn);
+
+@include angular-material-theme($ct-theme);
+
+$primary: map-get($ct-theme, primary);
+$accent: map-get($ct-theme, accent);
+
+:root {
+  --color-primary: #{mat-color($ct-primary)};
+  --color-accent: #{mat-color($ct-accent)};
+  --color-warn: #{mat-color($ct-warn)};
+  --color-success: #{mat-color($ct-success)};
+}

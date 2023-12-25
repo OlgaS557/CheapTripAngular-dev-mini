@@ -1,0 +1,25 @@
+
+<section *ngFor="let card of cards" class = "cards-space">
+
+
+
+
+<mat-card class="link-card">
+    <mat-card-header>
+      <div mat-card-avatar class="header-image"  style="background-image: url({{card.icolink}}) ; ">
+      
+      </div>
+      <mat-card-title>{{card.title}}</mat-card-title>
+    </mat-card-header>
+      <mat-card-subtitle>{{card.description}}</mat-card-subtitle>
+    
+ 
+    <mat-card-content>
+      <p>
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="goToLink(card.link)">Перейти на сайт {{card.link}}</button>
+    </mat-card-actions>
+  </mat-card>
+</section>

@@ -1,0 +1,11 @@
+<div class="main"[ngClass]="currentClass">
+  <h1 mat-dialog-title>{{data.header}}</h1>
+  <div mat-dialog-content>
+    <p class="mat-body-1">{{ data.text }}</p>
+  </div>
+  <div mat-dialog-actions>
+    <button *ngFor="let btn of data.buttons" mat-button mat-dialog-close [ngClass]='btn.buttonType'>{{btn.buttonText}}</button>
+
+  </div>
+
+</div>

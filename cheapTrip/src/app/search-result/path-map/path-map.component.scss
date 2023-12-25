@@ -1,0 +1,41 @@
+@import "../../../cheapTripStyles/styles.scss";
+:host {
+  position: relative;
+  //@extend display: block;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+div {
+  width: 100%;
+
+  position: relative;
+  padding: 0;
+  margin: 0;
+  iframe {
+    position: relative;
+  }
+}
+
+div.desktop {
+
+  iframe {
+    position: relative;
+    left: 0;
+    top: 0.6rem;
+  }
+}
+
+@include Phones {
+  div {
+    width: 100%;
+    margin: auto;
+    position: relative;
+    iframe {
+      position: relative;
+    }
+  }
+}

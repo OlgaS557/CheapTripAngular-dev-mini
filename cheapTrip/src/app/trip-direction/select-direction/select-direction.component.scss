@@ -1,0 +1,349 @@
+@import "../../../cheapTripStyles/styles.scss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+mat-option {
+  color: var(--color-accent);
+  height: 40px;
+}
+div.mainContainer {
+  width: 90%;
+  margin: auto;
+  height: auto;
+  box-sizing: border-box;
+  position: relative;
+  div.message {
+    margin: 0.5rem auto 0.5rem;
+    padding: 0;
+    color:#607D8B;
+
+    .LongSlogan {
+      width: 100%;
+      font-family:'Roboto', sans-serif;
+      text-align: center;
+      margin: 1rem auto;
+      font-size: 0.9rem;
+      line-height: 2rem;
+      
+      
+    }
+  }
+
+  form {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    div.formInfo {
+      width: 100%;
+      margin: 1rem auto 0.5rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+      section {
+        width: 45%;
+        div.error {
+          p {
+            color: var(--color-warn);
+            font-style: italic;
+            padding-left: 3rem;
+          }
+        }
+
+        div.input {
+          width: 100%;
+
+          display: flex;
+          span {
+           // align-self: center;
+            color: grey;
+            cursor: pointer;
+          }
+
+          mat-form-field {
+            width: 100%;
+            @include boxSizing(border-box);
+            
+            padding-left: 0.5rem;
+
+            input {
+              @include placeholder(var(--color-primary), 2rem, normal, cursive);
+            }
+          }
+          mat-form-field.valid {
+            border-color: var(--color-accent);
+          }
+
+          mat-form-field.invalid {
+            border-color: var(--color-warn);
+          }
+        }
+      }
+      span.arrows {
+        color: var(--color-primary);
+        // cursor: pointer;
+      }
+    }
+    div.actions {
+      height: 5rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-end;
+      button {
+        width: 6rem;
+        margin: 0 2rem;
+      }
+    }
+  }
+}
+
+div.deliveryMode {
+  form {
+    div.actions {
+      align-items: flex-start;
+      height: 2.5rem;
+    }
+  }
+}
+
+@include Desktop {
+  div.mainContainer{
+    
+  div.message{
+    
+ 
+  .LongSlogan{
+    font-size: 1.6rem;
+  }
+}
+  }
+}
+
+@include Large {
+ 
+  div.mainContainer {
+    form {
+      div.actions {
+        margin-top: 1rem;
+      }
+    }
+  }
+
+  div.deliveryMode {
+    form {
+      div.actions {
+        margin: 1rem auto;
+      }
+    }
+  }
+}
+@include Small {
+  div.mainContainer {
+    width: 90%;
+    div.message {
+      h1 {
+        margin: 1rem auto;
+       
+      }
+    }
+  }
+  div.searchMode {
+    .mat-autocomplete .autocomplete {
+      height: 50% !important;
+    }
+  }
+}
+
+@include Smallphones {
+  div.mainContainer {
+    margin: auto;
+    width: 98%;
+    div.message {
+      position: relative;
+      top: 1rem;
+      h1 {
+        display: block;
+        width: 90%;
+        margin: auto;
+        font-size: 1rem;
+        line-height: 1.5rem;
+      }
+    }
+    form {
+      position: relative;
+      top: -0.5rem;
+      width: 100%;
+      flex-direction: column;
+      div.formInfo {
+        flex-direction: column;
+        height: auto;
+        flex-direction: column;
+        section {
+          width: 100%;
+          div {
+            mat-form-field {
+              margin: auto;
+              position: relative;
+              padding-left: 0.4rem;
+              border: none;
+            }
+            mat-form-field.startPoint {
+              top: 0.5rem;
+            }
+          }
+        }
+        span.arrows {
+          width: 1.5rem;
+          align-self: center;
+
+          text-align: center;
+          transform: rotate(90deg);
+        }
+      }
+      div.actions {
+        height: auto;
+        align-items: flex-start;
+      }
+    }
+  }
+
+  div.deliveryMode {
+    width: 100%;
+    margin: 5px auto;
+    div.message {
+      display: none;
+    }
+
+    form {
+      div.formInfo {
+        section {
+          margin-right: 1rem;
+          div.input {
+            mat-form-field {
+              border: none;
+            }
+          }
+        }
+      }
+
+      div.actions {
+        margin: 0;
+      }
+      div.formInfo {
+        width: 98%;
+        margin: 0.5rem auto 0;
+        position: relative;
+
+        mat-form-field {
+          position: relative;
+          border-left: none;
+        }
+        span {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+
+
+@include Phones {
+
+  
+  div.mainContainer {
+    margin: auto;
+    width: 98%;
+    div.message {
+      margin-top: 0;
+      position: relative;
+      top: 1rem;
+      h1 {
+        display: block;
+        width: 90%;
+        margin: auto;
+        // font-size: 1rem;
+        line-height: 1.5rem;
+      }
+    }
+    form {
+      position: relative;
+      top: -0.5rem;
+      width: 100%;
+      flex-direction: column;
+      div.formInfo {
+        flex-direction: column;
+        height: auto;
+        flex-direction: column;
+        section {
+          width: 100%;
+          div.input {
+            mat-form-field {
+              margin: auto;
+              position: relative;
+              padding-left: 0.4rem;
+              border: none;
+            }
+            mat-form-field.startPoint {
+              top: 0.5rem;
+            }
+          }
+        }
+        span.arrows {
+          text-align: center;
+          transform: rotate(90deg);
+        }
+      }
+      div.actions {
+        height: auto;
+        align-items: flex-start;
+      }
+    }
+  }
+
+  div.deliveryMode {
+    width: 100%;
+    margin: 5px auto;
+    div.message {
+      display: none;
+    }
+
+    form {
+      div.actions {
+        margin: 0;
+      }
+      div.formInfo {
+        width: 98%;
+        margin: 0.5rem auto 0;
+        position: relative;
+        section {
+          div.input {
+            mat-form-field {
+              position: relative;
+              border: none;
+            }
+            span {
+              position: relative;
+              left: -1rem;
+              font-size: 0.9rem;
+              //  align-self: end;
+            }
+          }
+        }
+      }
+    }
+  }
+}

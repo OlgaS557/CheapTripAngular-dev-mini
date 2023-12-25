@@ -1,0 +1,51 @@
+
+@import '../../cheapTripStyles/mixins.scss';
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+div.slogan {
+  p {
+    font-style: italic;
+    font-size: 0.9em;
+    color: white;
+    margin: 0%;
+    line-height: 1.5rem;
+    font-family: "Anton", sans-serif;
+    font-style: italic;
+    font-weight: lighter;
+    letter-spacing: 4px;
+  }
+}
+
+@include Phones {
+  div.slogan {
+    p {
+      font-style: italic;
+      font-size: 0.7em;
+      color: white;
+      margin: 0%;
+      line-height: 1.5rem;
+      letter-spacing: 2px;
+    }
+  }
+}
+
+@include Smallphones {
+  div.slogan {
+    p {
+      font-style: italic;
+      font-size: 0.7em;
+      color: white;
+      margin: 0%;
+      line-height: 1.5rem;
+      letter-spacing: 2px;
+    }
+  }
+}

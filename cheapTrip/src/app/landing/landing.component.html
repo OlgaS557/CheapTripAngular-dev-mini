@@ -1,0 +1,66 @@
+<mat-toolbar [class.dark]="isDark">
+  <div class="logo">
+    <button mat-button> CHEAP TRIP. PAY LESS, VISIT MORE! </button>
+   <!--  <img @myInsertRemoveTrigger *ngIf="!isDark" src="../../assets/images/cheapTrip.png">
+    <img @myInsertRemoveTrigger *ngIf="isDark" src="../../assets/images/cheapTrip_white.png"> -->
+  </div>
+  <div class="menu">
+    <button mat-button>PRODUCT1</button>
+    <button mat-button>TEAM</button>
+    <button mat-button>BLOG</button>
+    <button mat-button>CUSTOMRS</button>
+    <button mat-button [matMenuTriggerFor]="belowMenu">ABOUT<span class="material-icons">
+        keyboard_arrow_down
+      </span></button>
+    <mat-menu #belowMenu="matMenu" yPosition="below">
+      <button class="submenu" mat-menu-item>CONTACT US</button>
+
+    </mat-menu>
+  </div>
+  <div class="buttons">
+    <button mat-button type="button" class="btn login">LOGIN</button>
+    <button mat-button type="button" class="btn start" (click)="toSearchPage()">START</button>
+  </div>
+</mat-toolbar>
+
+
+<div class="screen screen_1">
+  <div class="message">
+    <div>
+      <p>By combining different types of transport, you can create a route that will be cheaper than you originally
+        thought.</p>
+      <h1> Priceless impressions by less price!
+      </h1>
+
+      <p>Discover the cheapest way to get anywhere (Currently in Europe) combining plane, train, bus and rideshare.
+      </p>
+      <button mat-button type="button" class="start"  (click)="toSearchPage()">START</button>
+    </div>
+  </div>
+
+  <div class="picture">
+    <img src="../../assets/images/computer1.png">
+  </div>
+</div>
+<div class="screen screen_2" id="secondScreen">
+  <div class="message">
+    <div>
+      <p>We present you a tool that will revolutionize your travel experience.</p>
+
+      <p>  The direct route is no longer the cheapest.<br/> Analyzing the most up-to-date information, we compose  a route that will lead you to your destination for less money. The proposed route includes various types of public transport.
+  <br/><span>How does it work?</span> <br/> Just select the start and end point of your trip from the list in the fields From and To, and click the Start button. Several route options are displayed on the page. By clicking on one of them, you can get acquainted with the details of the proposed route.
+        At the moment the database works with the largest cities in Europe.
+        Always check your travel details with your direct carrier.
+        Ready, then you go there:
+        </p>
+      <p> <button mat-button type="button" class="start"  (click)="toSearchPage()">START</button></p>
+
+    </div>
+
+  </div>
+  <div class="picture"> <img src="../../assets/images/computer4.png">
+    <img class="ball" src="../../assets/images/ball.png">
+
+
+  </div>
+</div>

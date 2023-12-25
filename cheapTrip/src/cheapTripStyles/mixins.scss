@@ -1,0 +1,140 @@
+@mixin borderRadius($topLeft, $topRight, $bottomLeft, $bottomRight) {
+  -webkit-border-radius: $topLeft $topRight $bottomLeft $bottomRight;
+  -moz-border-radius: $topLeft $topRight $bottomLeft $bottomRight;
+  -ms-border-radius: $topLeft $topRight $bottomLeft $bottomRight;
+  -o-border-radius: $topLeft $topRight $bottomLeft $bottomRight;
+  border-radius: $topLeft $topRight $bottomLeft $bottomRight;
+}
+
+@mixin borderRad($val) {
+  @include borderRadius($val, $val, $val, $val);
+}
+
+@mixin boxSizing($boxSizing) {
+  -moz-box-sizing: $boxSizing;
+  box-sizing: $boxSizing;
+}
+
+@mixin placeholder($color, $fontSize, $fontWeight, $fontStyle) {
+  &::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: $color;
+    font-size: $fontSize;
+    font-weight: $fontWeight;
+    font-style: $fontStyle;
+  }
+  &:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: $color;
+    font-size: $fontSize;
+    font-weight: $fontWeight;
+    font-style: $fontStyle;
+  }
+  &::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: $color;
+    font-size: $fontSize;
+    font-weight: $fontWeight;
+    font-style: $fontStyle;
+  }
+  &:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: $color;
+    font-size: $fontSize;
+    font-weight: $fontWeight;
+    font-style: $fontStyle;
+  }
+}
+
+@mixin boxShadow($hLength, $vLength, $blurR, $spreadR) {
+  -webkit-box-shadow: $hLength $vLength $blurR $spreadR rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: $hLength $vLength $blurR $spreadR rgba(0, 0, 0, 0.75);
+  box-shadow: $hLength $vLength $blurR $spreadR rgba(0, 0, 0, 0.75);
+}
+
+@mixin Desktop {
+  @media screen  and (min-width: 960px) {
+    @content;
+}
+  
+}
+
+@mixin XLarge {
+  @media screen  and (min-width: 1920px) {
+       @content;
+  }
+}
+@mixin Large {
+  @media screen  and (min-width: 1280px) and (max-width: 1919.99px){
+      @content;
+  }
+}
+@mixin Medium {
+  @media screen and (min-width: 960px) and  (max-width: 1279.99px) {
+      @content;
+  }
+}
+
+@mixin TabLandscape {
+  @media screen and   (min-width: 960px) and (max-width: 1279.99px) and (orientation: landscape){
+      @content;
+  }
+}
+
+
+
+@mixin TabPortrait {
+  @media screen and (min-width: 600px)  and  (max-width: 839.99px) and (orientation: portrait) {
+      @content;
+  }
+}
+
+@mixin WebPortrait {
+  @media screen and (min-width: 840px)   and (orientation: portrait) {
+      @content;
+  }
+}
+
+@mixin WebLandscape {
+  @media screen and   (min-width: 1280px)  and (orientation: landscape){
+      @content;
+  }
+}
+
+@mixin Small {
+  @media screen  and (min-width: 600px) and  (max-width: 959.99px){
+      @content;
+  }
+}
+
+
+@mixin XSmall {
+  @media screen and  (max-width: 599.99px) {
+      @content;
+  }
+}
+
+@mixin HandSetPortrait {
+  @media screen and  (max-width: 599.99px)  and (orientation: portrait){
+      @content;
+  }
+}
+
+@mixin HandSetLandScape {
+  @media screen and  (max-width: 959.99px)  and (orientation: landscape){
+      @content;
+  }
+}
+
+@mixin Phones {
+ @media screen  and (min-width: 360px) and (max-width: 500px) {
+      @content;
+ }
+}
+
+@mixin Smallphones {
+  @media screen and (max-width: 359.99px) {
+       @content;
+  }
+ }
+
