@@ -1,6 +1,5 @@
 [build]
 base = "C:\\Angular\\CheapTripAngular-dev-mini\\cheapTrip"
-command = "npm run build"
 publish = "dist/"
 node_version = "16.x"
 npm_version = "8.x"
