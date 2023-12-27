@@ -5,5 +5,8 @@ node_version = "16.x"
 npm_version = "8.x"
 environment = { NODE_VERSION = "16.13.2" }
 
-
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
 
