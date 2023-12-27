@@ -3,4 +3,4 @@ command = "cd C:\\Angular\\CheapTripAngular-dev-mini\\cheapTrip && npm run build
 publish = "dist/"
 node_version = "16.x"
 npm_version = "8.x"
-
+environment = { NODE_VERSION = "16.13.2" }

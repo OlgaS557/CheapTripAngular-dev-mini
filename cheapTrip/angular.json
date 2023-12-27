@@ -30,7 +30,8 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/cheapTrip/_redirects"
             ],
             "styles": [
               "node_modules/flag-icon-css/css/flag-icon.min.css",
