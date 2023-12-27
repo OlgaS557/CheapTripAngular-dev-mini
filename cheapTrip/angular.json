@@ -31,7 +31,11 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/cheapTrip/_redirects"
+              {
+                "glob": "_redirects",
+                "input": "cheapTrip",
+                "output": "/"
+              }
             ],
             "styles": [
               "node_modules/flag-icon-css/css/flag-icon.min.css",
