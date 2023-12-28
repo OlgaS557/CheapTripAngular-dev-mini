@@ -30,8 +30,7 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              "src/_redirects"
+              "src/assets"
             ],
             "styles": [
               "node_modules/flag-icon-css/css/flag-icon.min.css",
