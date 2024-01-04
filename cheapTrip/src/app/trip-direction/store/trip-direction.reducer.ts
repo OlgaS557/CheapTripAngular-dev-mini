@@ -35,20 +35,24 @@ export function tripDirectionReducer(
   state = initialState,
   action: TripDirectionActions.TripDirectionActions
 ): ITripDirectionState {
+  console.log('Action dispatched:', action);
   switch (action.type) {
     case TripDirectionActions.SET_START_POINT:
+      console.log('SET_START_POINT:', action.payload);
       return {
         ...state,
         startPoint: action.payload,
       };
 
     case TripDirectionActions.SET_END_POINT:
+      console.log('SET_END_POINT:', action.payload);
       return {
         ...state,
         endPoint: action.payload,
       };
 
     case TripDirectionActions.SET_START_POINT_AUTOCOMPLETE:
+      console.log('SET_START_POINT_AUTOCOMPLETE:', action.payload);
       let newStartAutocompleteList = [];
       if (action.payload.length === 0) {
         newStartAutocompleteList = [...state.startPointAutoComplete];
@@ -61,6 +65,7 @@ export function tripDirectionReducer(
       };
 
     case TripDirectionActions.SET_END_POINT_AUTOCOMPLETE:
+      console.log('SET_END_POINT_AUTOCOMPLETE:', action.payload);
       let newEndAutocompleteList = [];
       if (action.payload.length === 0) {
         newEndAutocompleteList = [...state.endPointAutoComplete];
@@ -139,6 +144,7 @@ export function tripDirectionReducer(
       };
 
     case TripDirectionActions.SET_MODE:
+      console.log('SET_MODE:', action.payload);
       return {
         ...state,
 

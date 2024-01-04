@@ -81,3 +81,12 @@ export interface IPathPoint {
   id: number;
   name: string;
 }
+
+export interface LocationData {
+  [key: string]: {
+    name: string;
+    latitude: number;
+    longitude: number;
+    country_name: string;
+  };
+}

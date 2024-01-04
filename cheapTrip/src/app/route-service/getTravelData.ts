@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { of, Observable, forkJoin } from 'rxjs';
 import {
   IJsonTravelData,
@@ -19,73 +19,76 @@ export class DataService {
     private mixedData: MixedRoutes
   ) {}
 
-  async getFilterJson(
+  private async getFilterJson(
     startPoint: string,
     endPoint: string
   ): Promise<IJsonTravelData[]> {
-    console.time('-------------------------- Travel_data');
-    return caches
-      .match(new Request('direct_routes'))
-      .then(response => {
-        if (response) {
-          return response.json();
-        }
-      })
-      .then(data => {
+    try {
+      console.time('-------------------------- Travel_data');
+      const response = await caches.match(new Request('direct_routes'));
+      if (response) {
+        const data = await response.json();
         const objArray: IJsonTravelData[] = Object.values(data);
         const filterData: IJsonTravelData[] = objArray.filter(
-          (el: IJsonTravelData) =>
-            el.from === +startPoint && el.to === +endPoint
+          (el: IJsonTravelData) => el.from === +startPoint && el.to === +endPoint
         );
         console.timeEnd('-------------------------- Travel_data');
-
         return filterData;
-      });
+      }
+      return [];
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      return [];
+    }
   }
 
-  async getTravelData({
+  private async getTravelData({
     startPoint,
     endPoint,
   }: {
     startPoint: string;
     endPoint: string;
   }): Promise<any> {
-    console.time('GetTransportAndLocation');
-    const transportType: {} = JSON.parse(
-      sessionStorage.getItem('transportationTypes')
-    );
-    const locations: {} = JSON.parse(sessionStorage.getItem('locations'));
-    console.timeEnd('GetTransportAndLocation');
+    try {
+      console.time('GetTransportAndLocation');
+      const transportType: {[key: string]: { name: string }} = JSON.parse(
+        sessionStorage.getItem('transportationTypes')) || {};
+      const locations: {[key: string]: { name: string }} = JSON.parse(
+        sessionStorage.getItem('locations')) || {};
+      console.timeEnd('GetTransportAndLocation');
 
-    console.time('GetFilterJson Travel_data');
-
-    return this.getFilterJson(startPoint, endPoint).then(data => {
+      console.time('GetFilterJson Travel_data');
+      const data = await this.getFilterJson(startPoint, endPoint);
       if (data.length > 0) {
         console.log(data);
-        let result = [];
-        for (let i = 0; i < data.length; i++) {
-          result.push({
-            duration_minutes: data[i].duration,
-            euro_price: data[i].price,
+        const result = data.map((item) => {
+          const fromName = locations[item.from]?.name || 'Unknown';
+          const toName = locations[item.to]?.name || 'Unknown';
+          const transportTypeName = transportType[item.transport]?.name || 'Unknown';
+      
+          return {
+            duration_minutes: item.duration,
+            euro_price: item.price,
             route_type: 'direct_routes',
             direct_paths: [
               {
-                duration_minutes: data[i].duration,
-                euro_price: +data[i].price,
-                from: locations[data[i].from].name,
-                to: locations[data[i].to].name,
-                transportation_type: transportType[data[i].transport].name,
+                duration_minutes: item.duration,
+                euro_price: +item.price,
+                from: fromName,
+                to: toName,
+                transportation_type: transportTypeName,
               },
             ],
-          });
-        }
+          };
+        });
         console.timeEnd('GetFilterJson Travel_data');
-
         return result;
-      } else {
-        return [];
       }
-    });
+      return [];
+    } catch (error) {
+      console.error('Error fetching travel data:', error);
+      return [];
+    }
   }
 
   getPathMap(startPoint: string, endPoint: string): Observable<any> {
@@ -104,6 +107,10 @@ export class DataService {
         ];
         console.log(pathMap);
         return pathMap;
+      }),
+      catchError((error) => {
+        console.error('Error in getPathMap:', error);
+        return of([]); 
       })
     );
   }

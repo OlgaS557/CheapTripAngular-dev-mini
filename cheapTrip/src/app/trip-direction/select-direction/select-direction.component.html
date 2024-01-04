@@ -67,16 +67,12 @@
           <span *ngIf="directionForm.get('startPointControl').errors['required']">This field is required!</span>
         </p> -->
         </div>
-        <div
-          class="error"
-          *ngIf="
-            !directionForm.get('startPointControl').valid &&
-            (directionForm.get('startPointControl').pristine ||
-              directionForm.get('startPointControl').untouched)
-          "
-        >
-          <p *ngIf="directionForm.get('startPointControl').errors.invalidMsg">
-            {{ directionForm.get('startPointControl').errors.invalidMsg }}
+        <div class="error">
+          <p *ngIf="!startPoint || (!directionForm.get('startPointControl').valid &&
+            (directionForm.get('startPointControl').touched || directionForm.get('startPointControl').dirty))">
+            <span *ngIf="directionForm.get('startPointControl').errors?.invalidMsg">
+              {{ directionForm.get('startPointControl').errors?.invalidMsg }}
+            </span>
           </p>
         </div>
       </section>
@@ -131,8 +127,15 @@
             >clear
           </span>
         </div>
-
-        <div
+        <div class="error">
+          <p *ngIf="!startPoint || (!directionForm.get('startPointControl').valid &&
+            (directionForm.get('startPointControl').touched || directionForm.get('startPointControl').dirty))">
+            <span *ngIf="directionForm.get('startPointControl').errors?.invalidMsg">
+              {{ directionForm.get('startPointControl').errors?.invalidMsg }}
+            </span>
+          </p>
+        </div>
+        <!-- <div
           class="error"
           *ngIf="
             !directionForm.get('endPointControl').valid &&
@@ -143,7 +146,7 @@
           <p *ngIf="directionForm.get('endPointControl').errors.invalidMsg">
             {{ directionForm.get('endPointControl').errors.invalidMsg }}
           </p>
-        </div>
+        </div> -->
       </section>
     </div>
     <div class="actions">
@@ -161,7 +164,7 @@
         color="primary"
         style="color: white"
         #sBtn
-        [disabled]="endPoint.name.length < 1 || startPoint.name.length < 1"
+        [disabled]="!endPoint?.name || !startPoint?.name || endPoint.name.length < 1 || startPoint.name.length < 1"
         type="submit"
         i18n="letsgo@@letsgo"
       >

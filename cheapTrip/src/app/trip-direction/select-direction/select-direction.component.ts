@@ -1,5 +1,6 @@
 import { trigger, style, transition, animate } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { isDevMode } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -11,7 +12,7 @@ import { map, startWith } from 'rxjs/operators';
 import * as fromApp from '../../store/app.reducer';
 import * as TripDirectionActions from '../store/trip-direction.actions';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { IPathPoint, IPoint, Modes } from '../trip-direction.model';
+import { IPathPoint, IPoint, LocationData, Modes } from '../trip-direction.model';
 import { debounceTime } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorInterceptor } from '../../error-interceptor';
@@ -58,7 +59,7 @@ export class SelectDirectionComponent implements OnInit {
   modes = Modes;
   startSubj = new Subject();
   endSubj = new Subject();
-  locations_data: any = Locations;
+  locations_data: LocationData = Locations;
   searchedPoint: any = [];
 
   @ViewChild('nameText', { static: false })
@@ -99,16 +100,75 @@ export class SelectDirectionComponent implements OnInit {
   }
 
   // autocomplete is invoked
+  // onInput(str: string, type: 'from' | 'to'): void {
+  //   const point: IPoint = { name: str, type: type };
+
+  //   const resLoc = Object.keys(this.locations_data.default).map(key => ({
+  //     name: key,
+  //     ...this.locations_data.default[key],
+  //   }));
+  //   this.searchedPoint = [];
+  //   let list = [];
+  //   resLoc.forEach(r => {
+  //     if (
+  //       r.name.toLowerCase().indexOf(point.name.toLowerCase()) === 0 &&
+  //       list.length <= 9
+  //     ) {
+  //       list.push({ id: r.id, name: r.name });
+  //     }
+
+  //     this.searchedPoint = list.sort((a, b) => a.name.localeCompare(b.name));
+  //   });
+  //   if (this.searchedPoint.length <= 9) {
+  //     console.log('this.searchedPoint <= 9', 'yes');
+  //     resLoc.forEach(r => {
+  //       if (
+  //         r.name.toLowerCase().indexOf(point.name.toLowerCase()) > 0 &&
+  //         list.length <= 9
+  //       ) {
+  //         list.push({ id: r.id, name: r.name });
+  //       }
+  //     });
+  //   }
+
+  //   if (
+  //     type === 'from' &&
+  //     this.directionForm.get('startPointControl').valid &&
+  //     str.length > 0
+  //   ) {
+  //     this.startPoint = { id: 0, name: '' };
+  //     this.store.dispatch(new TripDirectionActions.GetAutocomplete(point));
+  //     this.store.dispatch(
+  //       new TripDirectionActions.SetStartPointAutocomplete(this.searchedPoint)
+  //     );
+  //   } else if (
+  //     type === 'to' &&
+  //     this.directionForm.get('endPointControl').valid &&
+  //     str.length > 0
+  //   ) {
+  //     this.endPoint = { id: 0, name: '' };
+  //     this.store.dispatch(
+  //       new TripDirectionActions.SetEndPointAutocomplete(this.searchedPoint)
+  //     );
+  //     this.store.dispatch(new TripDirectionActions.GetAutocomplete(point));
+  //   }
+  // }
+
   onInput(str: string, type: 'from' | 'to'): void {
     const point: IPoint = { name: str, type: type };
+    
+    console.log('Input value:', str);
 
-    const resLoc = Object.keys(this.locations_data.default).map(key => ({
-      name: key,
+    const filteredLocations = Object.keys(this.locations_data.default)
+    .filter(key => this.locations_data.default[key].name.toLowerCase().includes(str.toLowerCase()))
+    .map(key => ({
+      id: +key,
+      name: this.locations_data.default[key].name,
       ...this.locations_data.default[key],
     }));
     this.searchedPoint = [];
     let list = [];
-    resLoc.forEach(r => {
+    filteredLocations.forEach(r => {
       if (
         r.name.toLowerCase().indexOf(point.name.toLowerCase()) === 0 &&
         list.length <= 9
@@ -120,7 +180,7 @@ export class SelectDirectionComponent implements OnInit {
     });
     if (this.searchedPoint.length <= 9) {
       console.log('this.searchedPoint <= 9', 'yes');
-      resLoc.forEach(r => {
+      filteredLocations.forEach(r => {
         if (
           r.name.toLowerCase().indexOf(point.name.toLowerCase()) > 0 &&
           list.length <= 9
@@ -152,13 +212,26 @@ export class SelectDirectionComponent implements OnInit {
       this.store.dispatch(new TripDirectionActions.GetAutocomplete(point));
     }
   }
+  
 
   onSubmit(): void {
     console.log('SUBMITTED!');
+    
+    // Ensure both startPoint and endPoint are selected
+    if (!this.startPoint || !this.endPoint) {
+      // Handle the case when startPoint or endPoint is not selected
+      console.error('Please select both start and end points.');
+      return;
+    }
+     console.log('Selected startPoint:', this.startPoint);
+     console.log('Selected endPoint:', this.endPoint);
+    // Dispatch the GetRouts action
     this.store.dispatch(new TripDirectionActions.GetRouts());
   }
+  
 
   optionSelected(point: any, type: string) {
+    console.log('Selected point:', point, 'Type:', type);
     if (type == 'from') {
       this.startSubj.next(point);
     } else if (type === 'to') {
@@ -242,6 +315,7 @@ export class SelectDirectionComponent implements OnInit {
   }
 
   onFocusOut(event: any): void {
+    console.log('onFocusOut event:', event);
     if (event.target.attributes.formControlName.value === 'startPointControl') {
       if (this.startPoint.name === '') {
         if (this.startPointAutoComplete.length === 0) {
@@ -265,8 +339,12 @@ export class SelectDirectionComponent implements OnInit {
           return;
         }
         this.endSubj.next(this.endPointAutoComplete[0]);
+      } else {
+        console.log('Unexpected case in onFocusOut:', event);
+        console.log('Target attributes:', event.target.attributes);
       }
     }
+    console.log('Finished processing onFocusOut:', event)
   }
 
   private setForm() {
@@ -353,36 +431,31 @@ export class SelectDirectionComponent implements OnInit {
   private pointsSubscription() {
     console.log('Points!');
     this.startSubj.subscribe(res => {
-      if (typeof res == 'string') {
-        this.startPoint = this.startPointAutoComplete.filter(
-          p => p.name === res
-        )[0];
+      console.log('Start point selected:', res);
+      if (typeof res === 'string') {
+        this.startPoint = this.startPointAutoComplete.find(p => p.name === res);
       } else {
         this.startPoint = res as IPathPoint;
-
         this.directionForm.patchValue({
           startPointControl: this.startPoint.name,
         });
       }
-      this.store.dispatch(
-        new TripDirectionActions.SetStartPoint({ ...this.startPoint })
-      );
+      console.log('Dispatching start point:', this.startPoint);
+      this.store.dispatch(new TripDirectionActions.SetStartPoint({ ...this.startPoint }));
     });
-
+  
     this.endSubj.subscribe(res => {
-      if (typeof res == 'string') {
-        this.endPoint = this.endPointAutoComplete.filter(
-          p => p.name === res
-        )[0];
+      console.log('End point selected:', res);
+      if (typeof res === 'string') {
+        this.endPoint = this.endPointAutoComplete.find(p => p.name === res);
       } else {
         this.endPoint = res as IPathPoint;
         this.directionForm.patchValue({
           endPointControl: this.endPoint.name,
         });
       }
-      this.store.dispatch(
-        new TripDirectionActions.SetEndPoint({ ...this.endPoint })
-      );
+      console.log('Dispatching end point:', this.endPoint);
+      this.store.dispatch(new TripDirectionActions.SetEndPoint({ ...this.endPoint }));
     });
   }
 }

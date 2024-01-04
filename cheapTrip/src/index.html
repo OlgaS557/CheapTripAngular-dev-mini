@@ -2,13 +2,15 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8"> 
-  <title>CheapTrip</title> 
-  <meta name="Description" i18n-content="@@MetaDescription" content-i18n="Discover the cheapest way to get anywhere combining flight, train, bus and ferry at cheaptrip.guru"> 
-  </meta> 
-  <meta name="KeyWords"  i18n-content="@@MetaKeywords" content="cheapest way, buy bus tickets, buy bus tickets London Amsterdam, cheap bus tickets, ">
+  <meta charset="utf-8">
+  <title>CheapTrip</title>
+  <meta name="Description" i18n-content="@@MetaDescription"
+    content-i18n="Discover the cheapest way to get anywhere combining flight, train, bus and ferry at cheaptrip.guru">
+  </meta>
+  <meta name="KeyWords" i18n-content="@@MetaKeywords"
+    content="cheapest way, buy bus tickets, buy bus tickets London Amsterdam, cheap bus tickets, ">
 
-    <base href="/">
+  <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
   <link rel="icon" type="image/x-icon" href="assets/favicon_io/favicon-32x32.png">
@@ -18,8 +20,8 @@
     href="https://fonts.googleapis.com/css2?family=Anton&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,400;0,500;1,400;1,500;1,700&display=swap"
     rel="stylesheet">
 
-    <script type="text/javascript">
-  console.time('SITEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE')
+  <script type="text/javascript">
+    console.time('SITEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE')
   </script>
   <script type="text/javascript"> var userAgent = navigator.userAgent.toLowerCase();
 
@@ -33,8 +35,8 @@
       alert('Sorry,  application does not support the type of web browser you are using.');
 
   </script>
-  <script type="text/javascript">  
-   console.time('location.json');
+  <script type="text/javascript">
+    console.time('location.json');
     fetch('assets/new_json/locations.json')
       .then(res => res.json())
       .then(data => {
@@ -46,21 +48,21 @@
       });
     console.timeEnd('location.json');</script>
 
-   <script type="text/javascript">
-      console.time('Transport.json');
+  <script type="text/javascript">
+    console.time('Transport.json');
     fetch('assets/new_json/transport.json')
       .then(res => res.json())
       .then(data =>
         sessionStorage.setItem('transportationTypes', JSON.stringify(data))
       );
     console.timeEnd('Transport.json');
-   </script>
-  
-  
+  </script>
 
 
 
-<!-- <script>
+
+
+  <!-- <script>
 Promise.all([
   fetch('assets/new_json/transportation_types.json'),
   fetch('assets/new_json/locations.json'),
@@ -87,8 +89,8 @@ Promise.all([
 
 <body class="mat-typography">
   <app-root></app-root>
-   <!-- Yandex.Metrika counter -->
-   <script type="text/javascript">
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
     (function (m, e, t, r, i, k, a) {
       m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
       m[i].l = 1 * new Date(); k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
@@ -109,24 +111,24 @@ Promise.all([
   <a href="\assets\seo\seo.docx"></a>
   <a href="\assets\seo\seo.txt"></a>
 
- <script type="text/javascript">
-     console.time('Travel_data.json');
+  <script type="text/javascript">
+    console.time('Travel_data.json');
     caches.open('fileCache').then(cache => {
-  cache.match('direct_routes').then(response => {
-    if (response) {
-      console.log('Кэш найден!');
-    } else {
-      fetch('assets/new_json/direct_routes.json')
-      .then(res => {return res.json();})
-      .then(json => {cache.put('direct_routes', new Response(JSON.stringify(json)))});
-    }
-  });
-});
+      cache.match('direct_routes').then(response => {
+        if (response) {
+          console.log('Кэш найден!');
+        } else {
+          fetch('assets/new_json/direct_routes.json')
+            .then(res => { return res.json(); })
+            .then(json => { cache.put('direct_routes', new Response(JSON.stringify(json))) });
+        }
+      });
+    });
 
-      console.timeEnd('Travel_data.json');
-   
+    console.timeEnd('Travel_data.json');
+
   </script>
- <!--    <script type="text/javascript">
+  <!--    <script type="text/javascript">
         console.time('Flying_data.json');
     caches.open('fileCache').then(cache => {
       cache.add('assets/new_json/flying_routes.json');
@@ -148,7 +150,7 @@ Promise.all([
     console.timeEnd('Mixed_data.json');
 
    </script>  -->
-   <script type="text/javascript">  console.timeEnd('SITEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE')</script>
+  <script type="text/javascript">  console.timeEnd('SITEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE')</script>
 
 </body>
 
