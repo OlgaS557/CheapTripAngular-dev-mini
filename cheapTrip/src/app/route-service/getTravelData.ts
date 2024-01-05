@@ -59,11 +59,20 @@ export class DataService {
 
       console.time('GetFilterJson Travel_data');
       const data = await this.getFilterJson(startPoint, endPoint);
+      console.log('data getFilterJson', data);
       if (data.length > 0) {
         console.log(data);
         const result = data.map((item) => {
-          const fromName = locations[item.from]?.name || 'Unknown';
-          const toName = locations[item.to]?.name || 'Unknown';
+          const fromLocation = locations[item.from];
+          const toLocation = locations[item.to];
+
+          if (!fromLocation || !toLocation) {
+            console.warn(`From location for ID ${item.from} not found.`);
+            console.warn(`To location for ID ${item.to} not found.`);
+          }
+
+          const fromName = fromLocation ? fromLocation.name : 'Unknown';
+          const toName = toLocation ? toLocation.name : 'Unknown';
           const transportTypeName = transportType[item.transport]?.name || 'Unknown';
       
           return {
@@ -83,6 +92,7 @@ export class DataService {
         });
         console.timeEnd('GetFilterJson Travel_data');
         return result;
+
       }
       return [];
     } catch (error) {

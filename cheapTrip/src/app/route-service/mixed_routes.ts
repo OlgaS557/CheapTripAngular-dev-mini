@@ -14,7 +14,7 @@ export class MixedRoutes {
 
     try {
       console.log('startPoint:', startPoint)
-      const mixedData = await this.http.get<any>(`assets/new_json/partly/routes/${startPoint}.json`).toPromise();
+      const mixedData = await this.http.get<any>(`assets/new_json/partly/routes/${+startPoint}.json`).toPromise();
       const filterData = mixedData[`${endPoint}`];
 
       if (!filterData) {
@@ -36,7 +36,7 @@ export class MixedRoutes {
       }
     } catch (error) {
       console.error('Error:', error);
-      throw error; 
+      throw error; // Rethrow the error for the calling code to handle
     }
   }
 
@@ -46,8 +46,8 @@ export class MixedRoutes {
       return [];
     }
     
-    const transportType: {} = JSON.parse(sessionStorage.getItem('transportationTypes'));
-    const locations: {} = JSON.parse(sessionStorage.getItem('locations'));
+    const transportType: {[key: string]: { name: string }} = JSON.parse(sessionStorage.getItem('transportationTypes'));
+    const locations: {[key: string]: { name: string }} = JSON.parse(sessionStorage.getItem('locations'));
     console.time('Get_Mixed_Routes');
 
     try {
@@ -56,8 +56,8 @@ export class MixedRoutes {
       if (data.length !== 0) {
         const result = [];
         const directPaths = data.travel_data.map((el: any) => {
-          const fromLocation = locations[el.from]?.name || 'Unknown';
-          const toLocation = locations[el.to]?.name || 'Unknown';
+          const fromLocation = locations[el.from];
+          const toLocation = locations[el.to];
 
           if(!fromLocation) {
             console.error(`From location for ID ${el.from} not found.`);
@@ -70,8 +70,8 @@ export class MixedRoutes {
           return {
             duration_minutes: el.duration,
             euro_price: el.price,
-            from: fromLocation,
-            to: toLocation,
+            from: fromLocation ? fromLocation.name : 'Unknown',
+            to: toLocation ? toLocation.name : 'Unknown',
             transportation_type: transportType[el.transport].name,
           };
         });

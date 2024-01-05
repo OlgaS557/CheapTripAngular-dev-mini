@@ -14,7 +14,7 @@ export class GroundRoutes {
 
     try {
       console.log('startPoint:', startPoint)
-      const fixedData = await this.http.get<any>(`assets/new_json/partly/fixed_routes/${startPoint}.json`).toPromise();
+      const fixedData = await this.http.get<any>(`assets/new_json/partly/fixed_routes/${+startPoint}.json`).toPromise();
       const filterData = fixedData[`${endPoint}`];
 
       if (!filterData) {
@@ -36,7 +36,7 @@ export class GroundRoutes {
       }
     } catch (error) {
       console.error('Error:', error);
-      throw error; 
+      throw error; // Rethrow the error for the calling code to handle
     }
   }
 
@@ -58,8 +58,8 @@ export class GroundRoutes {
       if (data && data.length !== 0) {
         const result = [];
         const directPaths = data.travel_data.map((el: any) => {
-          const fromLocation = locations[el.from]?.name || 'Unknown';
-          const toLocation = locations[el.to]?.name || 'Unknown';
+          const fromLocation = locations[el.from];
+          const toLocation = locations[el.to];
 
           if(!fromLocation) {
             console.error(`From location for ID ${el.from} not found.`);
@@ -72,8 +72,8 @@ export class GroundRoutes {
           return {
             duration_minutes: el.duration,
             euro_price: el.price,
-            from: fromLocation,
-            to: toLocation,
+            from: fromLocation ? fromLocation.name : 'Unknown',
+            to: toLocation ? toLocation.name : 'Unknown',
             transportation_type: transportType[el.transport].name,
           };
         });

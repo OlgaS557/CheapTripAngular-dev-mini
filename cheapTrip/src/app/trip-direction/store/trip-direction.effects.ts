@@ -396,7 +396,7 @@ export class TripDirectionEffects {
           }),
           tap(data => console.log(data)),
           map((res: any) => {
-            console.log(res);
+            console.log('res',res);
             let resultPathArr = null;
 
             resultPathArr = this.transformObject(res.body as IRecievedRouts[]);
@@ -407,17 +407,19 @@ export class TripDirectionEffects {
 
             console.log('RESULT', resultPathArr, request);
             console.timeEnd('Effects');
-
+            
             const endPoints = {
               from: request[1].startPoint,
               to: request[1].endPoint,
             };
+            console.log('endPoints', endPoints);
             const queryParams = {
               from: request[1].startPoint.name,
               fromID: request[1].startPoint.id,
               to: request[1].endPoint.name,
               toID: request[1].endPoint.id,
             };
+            console.log('queryParams', queryParams);
             this.router.navigate(['/search/myPath'], {
               queryParams,
             });

@@ -158,14 +158,15 @@ export class SelectDirectionComponent implements OnInit {
     const point: IPoint = { name: str, type: type };
     
     console.log('Input value:', str);
-
+    
     const filteredLocations = Object.keys(this.locations_data.default)
     .filter(key => this.locations_data.default[key].name.toLowerCase().includes(str.toLowerCase()))
     .map(key => ({
       id: +key,
-      name: this.locations_data.default[key].name,
+      name: key,
       ...this.locations_data.default[key],
     }));
+    console.log('FilteredLocations:', filteredLocations);
     this.searchedPoint = [];
     let list = [];
     filteredLocations.forEach(r => {
@@ -341,7 +342,6 @@ export class SelectDirectionComponent implements OnInit {
         this.endSubj.next(this.endPointAutoComplete[0]);
       } else {
         console.log('Unexpected case in onFocusOut:', event);
-        console.log('Target attributes:', event.target.attributes);
       }
     }
     console.log('Finished processing onFocusOut:', event)
