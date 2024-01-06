@@ -67,8 +67,7 @@ export class FlyingRoutes {
     const transportType: {[key: string]: { name: string }} = JSON.parse(sessionStorage.getItem('transportationTypes')) || {};
     const locations: {[key: string]: { name: string }} = JSON.parse(sessionStorage.getItem('locations')) || {};
     console.timeEnd('GetTransportAndLocationFlying');
-    console.log('locations:', locations);
-    console.log('transportType:', transportType);
+    
     try {
       const data = await this.getFilterJson({ startPoint, endPoint });
       console.log('getTravelData - FilterJson Data:', data);

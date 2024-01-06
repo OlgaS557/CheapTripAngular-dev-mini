@@ -166,7 +166,7 @@ export class SelectDirectionComponent implements OnInit {
       name: key,
       ...this.locations_data.default[key],
     }));
-    console.log('FilteredLocations:', filteredLocations);
+    
     this.searchedPoint = [];
     let list = [];
     filteredLocations.forEach(r => {
