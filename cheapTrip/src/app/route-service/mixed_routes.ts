@@ -36,7 +36,7 @@ export class MixedRoutes {
       }
     } catch (error) {
       console.error('Error:', error);
-      throw error; // Rethrow the error for the calling code to handle
+      throw error; 
     }
   }
 

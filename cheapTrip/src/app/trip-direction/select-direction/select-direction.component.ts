@@ -214,23 +214,12 @@ export class SelectDirectionComponent implements OnInit {
     }
   }
   
-
   onSubmit(): void {
     console.log('SUBMITTED!');
     
-    // Ensure both startPoint and endPoint are selected
-    if (!this.startPoint || !this.endPoint) {
-      // Handle the case when startPoint or endPoint is not selected
-      console.error('Please select both start and end points.');
-      return;
-    }
-     console.log('Selected startPoint:', this.startPoint);
-     console.log('Selected endPoint:', this.endPoint);
-    // Dispatch the GetRouts action
     this.store.dispatch(new TripDirectionActions.GetRouts());
   }
   
-
   optionSelected(point: any, type: string) {
     console.log('Selected point:', point, 'Type:', type);
     if (type == 'from') {

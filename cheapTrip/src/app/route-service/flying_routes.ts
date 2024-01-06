@@ -51,7 +51,7 @@ export class FlyingRoutes {
       }
     } catch (error) {
       console.error('Error:', error);
-      throw error; // Rethrow the error for the calling code to handle
+      throw error; 
     }
   }
 
@@ -119,41 +119,7 @@ export class FlyingRoutes {
   
   }
 }
-  //-----------------------------------------------------
-  // Старый код
-  // async getTravelData(startPoint: string, endPoint: string): Promise<any> {
-  //   // return [];
-  //   console.time('GetTransportAndLocationFlying');
-  //   const transportType: {} = JSON.parse(
-  //     sessionStorage.getItem('transportationTypes')
-  //   );
-  //   const locations: {} = JSON.parse(sessionStorage.getItem('locations'));
-  //   console.timeEnd('GetTransportAndLocationFlying');
-
-  //   return this.getFilterJson({ startPoint, endPoint }).then(data => {
-  //     console.log('data', data);
-  //     if (data && data.length !== 0) {
-  //       const result = [];
-
-  //       const directPaths = data.travel_data.map(el => ({
-  //         duration_minutes: el.duration,
-  //         euro_price: el.price,
-  //         from: locations[el.from].name,
-  //         to: locations[el.to].name,
-  //         transportation_type: transportType[el.transport].name,
-  //       }));
-  //       result.push({
-  //         duration_minutes: data.duration,
-  //         euro_price: data.price,
-  //         route_type: 'flying_routes',
-  //         direct_paths: directPaths,
-  //       });
-
-  //       return result;
-  //     } else {
-  //       return [];
-  //     }
-  //   });
+  
 
  
 
