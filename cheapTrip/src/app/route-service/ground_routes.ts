@@ -13,24 +13,51 @@ export class GroundRoutes {
     console.time('GetFilterJson Ground_Data');
 
     try {
-      console.log('startPoint:', startPoint)
-      const fixedData = await this.http.get<any>(`assets/new_json/partly/fixed_routes/${+startPoint}.json`).toPromise();
+      console.log('startPoint:', typeof startPoint );
+      console.log('startPoint and endPoint:', {startPoint}, {endPoint});
+
+      if (!startPoint || !endPoint) {
+        console.error('Invalid startPoint or endPoint');
+        return [];
+      }
+
+      const fixedData = await this.http.get<any>(`assets/new_json/partly/fixed_routes/${startPoint}.json`).toPromise();
       const filterData = fixedData[`${endPoint}`];
 
+      // Используем Object.values для преобразования direct_routes в массив строк
+      const path: string[] = Array.isArray(filterData.direct_routes)
+      ? filterData.direct_routes
+      : typeof filterData.direct_routes === 'string'
+        ? filterData.direct_routes.split(',')
+        : [];
+      console.log("filterData.direct_routes: ", filterData.direct_routes);
+      
       if (!filterData) {
         return [];
       }
 
-      const path: string[] = filterData.direct_routes.split(',');
+      // const path: string[] = filterData.direct_routes.split(',');
+      // const path: string[] = filterData.direct_routes;
+      // const path: string[] = Object.values(filterData.direct_routes || {});
+      console.log('path: ', path);
 
       const response = await caches.match('direct_routes');
+      console.log('Cached data:', response);
       if (response) {
         const data = await response.json();
         path.forEach((id: string): void => {
+          const pathItem = data[id];
+          console.log('pathItem: ', id);
+          console.log('pathItem: ', pathItem);
+          if (!pathItem) {
+            console.error(`Path item with ID ${id} not found.`);
+            return;
+          }
           pathData.push(data[id]);
         });
 
         filterData.travel_data = pathData;
+        console.log('pathData:', pathData );
         console.timeEnd('GetFilterJson Ground_Data');
         return filterData;
       }
@@ -60,13 +87,12 @@ export class GroundRoutes {
         const directPaths = data.travel_data.map((el: any) => {
           const fromLocation = locations[el.from];
           const toLocation = locations[el.to];
+          console.log('fromLocation-toLocation: ', fromLocation, toLocation);
 
-          if(!fromLocation) {
-            console.error(`From location for ID ${el.from} not found.`);
-          }
-
-          if(!toLocation) {
-            console.error(`To location for ID ${el.to} not found.`);
+          if (!fromLocation || !toLocation) {
+            console.warn(`From location for ID ${el.from} not found.`);
+            console.warn(`To location for ID ${el.to} not found.`);
+            return null; // Add a check and return null if locations are not found
           }
 
           return {
@@ -93,6 +119,5 @@ export class GroundRoutes {
       console.error('Error in getTravelData:', error);
       return [];
     }
-  
   }
 }

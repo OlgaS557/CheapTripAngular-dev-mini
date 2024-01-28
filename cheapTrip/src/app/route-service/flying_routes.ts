@@ -14,29 +14,43 @@ export class FlyingRoutes {
 
     try {
       console.log('startPoint:', typeof startPoint );
-      console.log('startPoint and endPoint:', {startPoint}, {endPoint});
+      console.log('startPoint and endPoint:', startPoint, endPoint);
 
       if (!startPoint || !endPoint) {
         console.error('Invalid startPoint or endPoint');
         return [];
       }
 
-      const flyingData = await this.http.get<any>(`assets/new_json/partly/flying_routes/${+startPoint}.json`).toPromise();
+      const flyingData = await this.http.get<any>(`assets/new_json/partly/flying_routes/${startPoint}.json`).toPromise();
       const filterData = flyingData[`${endPoint}`];
+      console.log('filterData:', filterData);
       
+      console.log("filterData.direct_routes: ", filterData.direct_routes);
+      
+      // Используем Object.values для преобразования direct_routes в массив строк
+      const path: string[] = Array.isArray(filterData.direct_routes)
+      ? filterData.direct_routes
+      : typeof filterData.direct_routes === 'string'
+        ? filterData.direct_routes.split(',')
+        : [];
+
       if (!filterData) {
         return [];
       }
 
-      const path: string[] = filterData.direct_routes.split(',');
-
+      // const path: string[] = filterData.direct_routes.split(',');//variant for all jsons with direct_routes string - "100048,2250385,2310370"
+      // const path: string[] = filterData.direct_routes;
+      // const path: string[] = Object.values(filterData.direct_routes || {});
+      console.log('path: ', path);
       const response = await caches.match('direct_routes');
-      
+      console.log('Cached data:', response);
       if (response) {
         const data = await response.json();
         
         path.forEach((id: string): void => {
           const pathItem = data[id];
+          console.log('pathItem id: ', id);
+          console.log('pathItem data[id]: ', data[id]);
           if (!pathItem) {
             console.error(`Path item with ID ${id} not found.`);
             return;
@@ -47,7 +61,9 @@ export class FlyingRoutes {
         filterData.travel_data = pathData;
         console.log('pathData:', pathData );
         console.timeEnd('GetFilterJson Flying_Data');
+        console.log('filterData: ', filterData);
         return filterData;
+        
       }
     } catch (error) {
       console.error('Error:', error);
@@ -80,12 +96,10 @@ export class FlyingRoutes {
 
           console.log('fromLocation-toLocation: ', fromLocation, toLocation);
 
-          if(!fromLocation) {
-            console.error(`From location for ID ${el.from} not found.`);
-          }
-
-          if(!toLocation) {
-            console.error(`To location for ID ${el.to} not found.`);
+          if (!fromLocation || !toLocation) {
+            console.warn(`From location for ID ${el.from} not found.`);
+            console.warn(`To location for ID ${el.to} not found.`);
+            return null; // Add a check and return null if locations are not found
           }
 
           return {
@@ -115,10 +129,10 @@ export class FlyingRoutes {
       console.error('getTravelData - Error:', error);
       return [];
     }
-  
   }
 }
-  
+
+
 
  
 

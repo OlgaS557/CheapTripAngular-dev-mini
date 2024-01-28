@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { of, Observable, forkJoin } from 'rxjs';
 import {
@@ -115,7 +116,7 @@ export class DataService {
           ...groundData,
           ...mixedData,
         ];
-        console.log(pathMap);
+        console.log("pathMap: ", pathMap);
         return pathMap;
       }),
       catchError((error) => {
