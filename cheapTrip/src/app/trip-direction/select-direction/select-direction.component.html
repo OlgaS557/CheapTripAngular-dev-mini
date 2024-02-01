@@ -29,6 +29,8 @@
           >
             <!--   <input (focusout)="onFocusOut($event)" (input)="onInput($event.target.value, 'from')" type="text" -->
             <input
+              #startPointInput
+              
               (focusout)="onFocusOut($event)"
               (input)="onInput($event.target.value, 'from')"
               type="text"
@@ -38,7 +40,7 @@
               matInput
               formControlName="startPointControl"
               [matAutocomplete]="auto1"
-              #startPointInput
+              autocorrect="on"
             />
 
             <mat-autocomplete
@@ -96,6 +98,7 @@
           >
             <input
               #endPointInput
+              
               (focusout)="onFocusOut($event)"
               (input)="onInput($event.target.value, 'to')"
               type="text"
@@ -105,6 +108,7 @@
               matInput
               formControlName="endPointControl"
               [matAutocomplete]="auto2"
+              autocorrect="on"
             />
             <mat-autocomplete
               class="single-autocomplete"

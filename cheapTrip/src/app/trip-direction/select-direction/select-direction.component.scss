@@ -262,8 +262,6 @@ div.deliveryMode {
 
 
 @include Phones {
-
-  
   div.mainContainer {
     margin: auto;
     width: 98%;
@@ -313,6 +311,7 @@ div.deliveryMode {
       }
     }
   }
+  
 
   div.deliveryMode {
     width: 100%;

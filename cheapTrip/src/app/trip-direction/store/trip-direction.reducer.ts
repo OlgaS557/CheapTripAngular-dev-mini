@@ -140,6 +140,7 @@ export function tripDirectionReducer(
         startPointAutoComplete: [],
         endPointAutoComplete: [],
         errorMessage: '',
+        paths: [],
         //  toHome: action.payload,
       };
 

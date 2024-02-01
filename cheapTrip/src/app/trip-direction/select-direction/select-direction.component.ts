@@ -269,6 +269,9 @@ export class SelectDirectionComponent implements OnInit {
       this.endPointInputEl.nativeElement.focus();
     }
   }
+
+  
+
   /*  notInStartListValidator(control: FormControl): { [s: string]: boolean } {
    if (this.startPointAutoComplete.length > 0) {
       const arr = this.startPointAutoComplete.map((point) =>
