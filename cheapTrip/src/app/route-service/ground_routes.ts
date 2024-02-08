@@ -59,11 +59,13 @@ export class GroundRoutes {
         filterData.travel_data = pathData;
         console.log('pathData:', pathData );
         console.timeEnd('GetFilterJson Ground_Data');
+        console.log('filterData: ', filterData);
         return filterData;
       }
     } catch (error) {
-      console.error('Error:', error);
-      throw error; // Rethrow the error for the calling code to handle
+      // console.error('Error:', error);
+      console.log('Data not found');
+      throw error; 
     }
   }
 
@@ -116,7 +118,8 @@ export class GroundRoutes {
         return [];
       }
     } catch (error) {
-      console.error('Error in getTravelData:', error);
+      // console.error('Error in getTravelData:', error);
+      console.log('Data not found');
       return [];
     }
   }

@@ -78,9 +78,16 @@ export class ErrorInterceptor implements HttpInterceptor {
             );
             break;
           default:
-            errorData = new AlertMessage('error', error.name, 'Unknown error', [
-              new Button('Close', $localize`:@@Close:Close`),
-            ]);
+            // errorData = new AlertMessage('error', error.name, 'Unknown error', [
+            //   new Button('Close', $localize`:@@Close:Close`),
+            // ]);
+            errorData = new AlertMessage(
+              'warning',
+              $localize`:@@oh,no:Oh no!`,
+              $localize`:@@noRoute:Sorry, the data we have accumulated is not
+             enough to build a route between the indicated cities. Try changing your request.`,
+              [new Button('Close', $localize`:@@Close:Close`)]
+            );
             break;
         }
         this.store.dispatch(

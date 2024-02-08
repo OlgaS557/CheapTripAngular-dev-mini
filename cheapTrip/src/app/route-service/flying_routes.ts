@@ -66,7 +66,8 @@ export class FlyingRoutes {
         
       }
     } catch (error) {
-      console.error('Error:', error);
+      // console.error('Error:', error);
+      console.log('Data not found');
       throw error; 
     }
   }
@@ -126,7 +127,8 @@ export class FlyingRoutes {
         return [];
       }
     } catch (error) {
-      console.error('getTravelData - Error:', error);
+      // console.error('getTravelData - Error:', error);
+      console.log('Data not found');
       return [];
     }
   }

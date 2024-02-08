@@ -59,12 +59,14 @@ export class MixedRoutes {
         filterData.travel_data = pathData;
         console.log('pathData:', pathData );
         console.timeEnd('GetFilterJson Mixed_Data');
+        console.log('filterData: ', filterData);
         return filterData;
       } else {
         console.error('Error: Data not found in the cache.');
       }
     } catch (error) {
-      console.error('Error:', error);
+      // console.error('Error:', error);
+      console.log('Data not found');
       throw error; 
     }
   }
@@ -117,7 +119,8 @@ export class MixedRoutes {
         return [];
       }
     } catch (error) {
-      console.error('Error in getTravelData:', error);
+      // console.error('Error in getTravelData:', error);
+      console.log('Data not found');
       return [];
     }
   }

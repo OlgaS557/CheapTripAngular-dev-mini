@@ -270,39 +270,6 @@ export class SelectDirectionComponent implements OnInit {
     }
   }
 
-  
-
-  /*  notInStartListValidator(control: FormControl): { [s: string]: boolean } {
-   if (this.startPointAutoComplete.length > 0) {
-      const arr = this.startPointAutoComplete.map((point) =>
-        point.name.toLocaleLowerCase()
-      );
-      if (arr.indexOf(control.value.toLowerCase()) == -1) {
-        return { notInList: true };
-      }
-    }
-
-    return null;
-  } */
-
-  /*   notInStartListValidatorAsync(
-    control: FormControl
-  ): Promise<any> | Observable<any> {
-    const promise = new Promise<any>((resolve, reset) => {
-      if (this.startPointAutoComplete.length > 0) {
-        const arr = this.startPointAutoComplete.map((point) =>
-          point.name.toLocaleLowerCase()
-        );
-        if (arr.indexOf(control.value.toLowerCase()) == -1) {
-          resolve({ notInList: true });
-        }
-      } else {
-        resolve(null);
-      }
-    });
-    return promise;
-  } */
-
   notInEndListValidator(control: FormControl): { [s: string]: boolean } {
     return null;
   }
