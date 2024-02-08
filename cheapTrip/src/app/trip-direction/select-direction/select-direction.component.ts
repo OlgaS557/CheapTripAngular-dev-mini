@@ -160,12 +160,24 @@ export class SelectDirectionComponent implements OnInit {
     console.log('Input value:', str);
     
     const filteredLocations = Object.keys(this.locations_data.default)
-    .filter(key => this.locations_data.default[key].name.toLowerCase().includes(str.toLowerCase()))
-    .map(key => ({
-      id: +key,
-      name: key,
-      ...this.locations_data.default[key],
-    }));
+    // .filter(key => this.locations_data.default[key].name.toLowerCase().includes(str.toLowerCase()))
+    // .map(key => ({
+    //   id: +key,
+    //   name: key,
+    //   ...this.locations_data.default[key],
+    // }));
+      .filter(key => {
+        const location = this.locations_data.default[key];
+        return location.name.toLowerCase().includes(str.toLowerCase());
+      })
+      .map(key => {
+        const location = this.locations_data.default[key];
+        if (location.country_name === null) {
+          return { id: +key, name: location.name };
+        } else {
+          return { id: +key, name: `${location.name}, ${location.country_name}`};
+        }
+      });
     
     this.searchedPoint = [];
     let list = [];
