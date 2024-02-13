@@ -2,11 +2,12 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
+  HttpEvent,
   HttpErrorResponse,
   HttpResponse,
 } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { Observable,throwError, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -30,7 +31,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     private store: Store<fromApp.AppState>
   ) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       tap(evt => {
         if (evt instanceof HttpResponse) {
@@ -49,9 +50,24 @@ export class ErrorInterceptor implements HttpInterceptor {
         }
       }),
       catchError((error: HttpErrorResponse) => {
+        
         let errorData: AlertMessage;
         // console.log ("--==unknown error==-- "+error)
         switch (true) {
+           //(файл не найден)
+          case error.status === 404:
+            const emptyResponse = new HttpResponse({ status: 404, statusText: 'Not Found' });
+            return of(emptyResponse);
+            
+          case  error.status !== 404 && error.status >= 400 && error.status < 500:
+            errorData = new AlertMessage(
+              'warning',
+              $localize`:@@oh,no:Oh no!`,
+              $localize`:@@noRoute:Sorry, the data we have accumulated is not
+             enough to build a route between the indicated cities. Try changing your request.`,
+              [new Button('Close', $localize`:@@Close:Close`)]
+            );
+            break;
           case error.status === 500:
             errorData = new AlertMessage(
               'error',
@@ -68,34 +84,28 @@ export class ErrorInterceptor implements HttpInterceptor {
               [new Button('Close', $localize`:@@Close:Close`)]
             );
             break;
-          case error.status >= 400:
-            errorData = new AlertMessage(
-              'warning',
-              $localize`:@@oh,no:Oh no!`,
-              $localize`:@@noRoute:Sorry, the data we have accumulated is not
-             enough to build a route between the indicated cities. Try changing your request.`,
-              [new Button('Close', $localize`:@@Close:Close`)]
-            );
-            break;
+          
           default:
-            // errorData = new AlertMessage('error', error.name, 'Unknown error', [
-            //   new Button('Close', $localize`:@@Close:Close`),
-            // ]);
-            errorData = new AlertMessage(
-              'warning',
-              $localize`:@@oh,no:Oh no!`,
-              $localize`:@@noRoute:Sorry, the data we have accumulated is not
-             enough to build a route between the indicated cities. Try changing your request.`,
-              [new Button('Close', $localize`:@@Close:Close`)]
-            );
+            errorData = new AlertMessage('error', error.name, 'Unknown error', [
+              new Button('Close', $localize`:@@Close:Close`),
+            ]);
+            // errorData = new AlertMessage(
+            //   'warning',
+            //   $localize`:@@oh,no:Oh no!`,
+            //   $localize`:@@noRoute:Sorry, the data we have accumulated is not
+            //  enough to build a route between the indicated cities. Try changing your request.`,
+            //   [new Button('Close', $localize`:@@Close:Close`)]
+            // );
             break;
         }
+
         this.store.dispatch(
           new TripDirectionActions.AutocompleteFail('errorMessage')
         );
 
         this.dialog.open(ErrorComponent, { data: errorData });
         return throwError(error);
+        
       })
     );
   }

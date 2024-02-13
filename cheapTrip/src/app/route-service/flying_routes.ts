@@ -20,9 +20,22 @@ export class FlyingRoutes {
         console.error('Invalid startPoint or endPoint');
         return [];
       }
-
-      const flyingData = await this.http.get<any>(`assets/new_json/partly/flying_routes/${startPoint}.json`).toPromise();
-      const filterData = flyingData[`${endPoint}`];
+      // Проверяем наличие файла перед выполнением запроса
+      const flyingDataUrl = `assets/new_json/partly/flying_routes/${startPoint}.json`;
+      const response = await this.http.get(flyingDataUrl).toPromise();
+      
+      // Если файл не существует, возвращаем пустой объект
+      if (!response) {
+        console.error(`Flying routes data not found for startPoint: ${startPoint}`);
+        return {};
+      }
+      // Проверяем, есть ли данные для конечной точки
+      if (!(endPoint in response)) {
+      console.error(`Flying routes data not found for endPoint: ${endPoint}`);
+      return {};
+      }
+      
+      const filterData = response[endPoint];
       console.log('filterData:', filterData);
       
       console.log("filterData.direct_routes: ", filterData.direct_routes);
@@ -42,10 +55,10 @@ export class FlyingRoutes {
       // const path: string[] = filterData.direct_routes;
       // const path: string[] = Object.values(filterData.direct_routes || {});
       console.log('path: ', path);
-      const response = await caches.match('direct_routes');
-      console.log('Cached data:', response);
-      if (response) {
-        const data = await response.json();
+      const cashResponse = await caches.match('direct_routes');
+      console.log('Cached data:', cashResponse);
+      if (cashResponse) {
+        const data = await cashResponse.json();
         
         path.forEach((id: string): void => {
           const pathItem = data[id];
@@ -66,9 +79,10 @@ export class FlyingRoutes {
         
       }
     } catch (error) {
-      // console.error('Error:', error);
-      console.log('Data not found');
-      throw error; 
+      console.error('Error:', error);
+      return {};
+      // console.log('Data not found');
+      // throw error; 
     }
   }
 
@@ -127,8 +141,8 @@ export class FlyingRoutes {
         return [];
       }
     } catch (error) {
-      // console.error('getTravelData - Error:', error);
-      console.log('Data not found');
+      console.error('getTravelData - Error:', error);
+      // console.log('Data not found');
       return [];
     }
   }
